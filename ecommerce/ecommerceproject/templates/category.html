@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to Linus Fashion where you can buys different items....
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{category.name}} -Linus store
+    {% else %}
+        See our new collections -Linus Store
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if category %}
+
+    <div class="row my_row_class">
+        <div class="mx-auto">
+            <p><a href="{% url 'shop:allprodcat' %}">Our product Collection</a></p>
+        </div>
+    </div>
+
+    {% endif %}
+<div class="mx_auto">
+    {% if category %}
+        <img class="my_image" src="{{category.image.url}}" alt="{{category.name}}">
+</div>
+    <br>
+<div>
+    <h1 class="text-center my_title">{{category.name}}</h1>
+    <p class="text-justify">{{category.description}}</p>
+</div>
+{% else %}
+<div>
+    <img class="my_image my_image_padding" src="{% static 'img/banner.png' %}" alt="Our products" style="width:100%;height:400px;">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title"> Our products Collections</h1>
+    <p class="text-justify"> BEST ONLINE SHOPPING SITE IN INDIA FOR FASHION
+Be it clothing, footwear or accessories, Linus offers you the ideal combination of fashion and functionality for men, women and kids. You will realise that the sky is the limit when it comes to the types of outfits that you can purchase for different occasions.</p>
+</div>
+    {% endif %}
+
+<!--<div class="container">-->
+<!--    <div class="row mx_auto">-->
+<!--        {% for product in products.object_list %}-->
+<!--        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 xol-lg-4" >-->
+<!--            <div class="card text-center" style="min-width:18rem;">-->
+<!--                <a href="{{product.get_url}}"><img class="card-img-top my_image" src="{{product.image.url}}" style="width:200px;" alt="{{product.name}}"></a>-->
+<!--            <div class="card-body">-->
+<!--                <h4>{{product.name}}</h4>-->
+<!--                <p>{{product.price}}</p>-->
+<!--            </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</div>-->
+
+<section style="background-color: #eee;">
+  <div class="text-center container py-5">
+      <h4 class="mt-4 mb-5 text-center"><strong>PRODUCTS</strong></h4>
+    <div class="row">
+        {% for product in products.object_list %}
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="card text-center">
+<!--          <div class="d-flex justify-content-between p-3">-->
+<!--            <p class="lead mb-0">Today's Combo Offer</p>-->
+<!--            <div-->
+<!--              class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"-->
+<!--              style="width: 35px; height: 35px;">-->
+<!--              <p class="text-white mb-0 small">x4</p>-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <a href="{{product.get_url}}"><img src="{{product.image.url}}"
+
+                                             class="card-img-top my_image" alt="{{product.name}}"  ></a>
+          <div class="card-body">
+<!--            <div class="d-flex justify-content-between">-->
+              <h4>{{product.name}}</h4>
+              <p>RS: {{product.price}}</p>
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+    </div>
+  </div>
+
+</section>
+
+
+
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+                <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+        {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+
+</div>
+{% endblock %}
+
+
